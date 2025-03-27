@@ -32,21 +32,21 @@
           <input
             type="text"
             v-model="scenario.name"
-            :id="'scenario-name-' + campaignIndex + '-' + scenarioIndex"
+            :id="'scenario-name-' + scenarioIndex + '-' + campaignIndex"
           />
         </div>
 
         <div
-          :id="'objective' + '-' + (objIndex + 1) + '-' + (scenarioIndex + 1) + '-' + (campaignIndex + 1)"
+          :id="'objective' + '-' + objIndex + '-' + scenarioIndex + '-' + campaignIndex"
           v-for="(_, objIndex) in scenario.objectives"
           :key="objIndex"
         >
           <ObjectiveComponent
-            :obj-index="objIndex"
+            :ind="objIndex + '-' + scenarioIndex + '-' + campaignIndex"
             @update-objective="updateObjective(campaignIndex, scenarioIndex, objIndex, $event)"
           />
           <button
-            :id="campaignIndex + '-' + scenarioIndex + '-' + objIndex + '-remove objective'"
+            :id="'remove-obj-' + objIndex + '-' + scenarioIndex + '-' + campaignIndex"
             type="button"
             @click="removeObjective(campaignIndex, scenarioIndex, objIndex)"
           >
@@ -54,7 +54,7 @@
           </button>
         </div>
         <button
-          :id="campaignIndex + '-' + scenarioIndex + '-add objective'"
+          :id="'add-obj-' + scenarioIndex + '-' + campaignIndex"
           type="button"
           @click="addObjective(campaignIndex, scenarioIndex)"
         >
