@@ -1,7 +1,6 @@
 # Problems 
 
 # Testing
-* Rework input ids to support multiple scenarios, campaigns
 
 # Ideas
 * Would it be better to have the json data be constantly rendered in another tab or on the other half of the screen?
