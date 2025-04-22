@@ -1,11 +1,11 @@
-# Problems 
+# Tasks
+* Add notes to scenarios
+* Add notes to campaigns
 
+# Problems 
 # Testing
 
 # Ideas
-* Would it be better to have the json data be constantly rendered in another tab or on the other half of the screen?
-* Add notes to scenarios, possibly also campaigns
-* Add a button to JSON field to copy contents?
 * Move remove objective button to a nicer place
 * Add accumulate resource and task to gather resource to identity
 * Change identities to allow for multiple
@@ -20,3 +20,4 @@
 * I think it was setting all of the checkboxes to checked when I hit submit because I did not have the v-model hooked up correctly?
 * I updated the form data by having each input call an event when it changed, passing in a key (the attribute (priority, time, etc)) and a value (primary, secondary, untimed, etc). The parent component keeps track of each objective's index, and when the update occurs, it updates the proper objectives attributes according to the key-value pair passed back.
 * I can access an array from the back by using .at() instead of [index]
+* The tabs were not updating because vars are not reactive in view; that's why it's necessary to use a const with a ref()

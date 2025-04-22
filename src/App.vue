@@ -1,90 +1,89 @@
 <template>
-  <header><button @click="setTab(0)">Form</button><button @click="setTab(1)">Data</button></header>
-  <div v-if="currTab === 'Form'">
-    <form @submit.prevent="handleSubmit">
-      <h1>Objectives Form</h1>
-      <div>
-        <label for="game-name">Game Name:</label>
-        <input type="text" v-model="game.name" :id="'game-name'" />
-      </div>
-
-      <div
-        :id="'campaign' + (campaignIndex + 1)"
-        v-for="(campaign, campaignIndex) in game.campaigns"
-        :key="campaignIndex"
-      >
-        <h3>Campaign {{ campaignIndex + 1 }}</h3>
+  <div class="container">
+    <div class="form-section">
+      <form>
+        <h1>Objectives Form</h1>
         <div>
-          <label for="campaign-name">Campaign Name:</label>
-          <input type="text" v-model="campaign.name" :id="'campaign-name-' + campaignIndex" />
+          <label for="game-name">Game Name:</label>
+          <input type="text" v-model="game.name" :id="'game-name'" />
         </div>
 
         <div
-          :id="'scenario' + (scenarioIndex + 1)"
-          v-for="(scenario, scenarioIndex) in campaign.scenarios"
-          :key="scenarioIndex"
+          :id="'campaign' + (campaignIndex + 1)"
+          v-for="(campaign, campaignIndex) in game.campaigns"
+          :key="campaignIndex"
         >
-          <h4>Scenario {{ scenarioIndex + 1 }}</h4>
+          <h3>Campaign {{ campaignIndex + 1 }}</h3>
           <div>
-            <label for="scenario-name">Scenario Name:</label>
-            <input
-              type="text"
-              v-model="scenario.name"
-              :id="'scenario-name-' + scenarioIndex + '-' + campaignIndex"
-            />
+            <label for="campaign-name">Campaign Name:</label>
+            <input type="text" v-model="campaign.name" :id="'campaign-name-' + campaignIndex" />
           </div>
 
           <div
-            :id="'objective' + '-' + objIndex + '-' + scenarioIndex + '-' + campaignIndex"
-            v-for="(_, objIndex) in scenario.objectives"
-            :key="objIndex"
+            :id="'scenario' + (scenarioIndex + 1)"
+            v-for="(scenario, scenarioIndex) in campaign.scenarios"
+            :key="scenarioIndex"
           >
-            <ObjectiveComponent
-              :ind="objIndex + '-' + scenarioIndex + '-' + campaignIndex"
-              @update-objective="updateObjective(campaignIndex, scenarioIndex, objIndex, $event)"
-            />
-            <button
-              :id="'remove-obj-' + objIndex + '-' + scenarioIndex + '-' + campaignIndex"
-              type="button"
-              @click="removeObjective(campaignIndex, scenarioIndex, objIndex)"
+            <h4>Scenario {{ scenarioIndex + 1 }}</h4>
+            <div>
+              <label for="scenario-name">Scenario Name:</label>
+              <input
+                type="text"
+                v-model="scenario.name"
+                :id="'scenario-name-' + scenarioIndex + '-' + campaignIndex"
+              />
+            </div>
+
+            <div
+              :id="'objective' + '-' + objIndex + '-' + scenarioIndex + '-' + campaignIndex"
+              v-for="(_, objIndex) in scenario.objectives"
+              :key="objIndex"
             >
-              Remove Objective
+              <ObjectiveComponent
+                :ind="objIndex + '-' + scenarioIndex + '-' + campaignIndex"
+                @update-objective="updateObjective(campaignIndex, scenarioIndex, objIndex, $event)"
+              />
+              <button
+                :id="'remove-obj-' + objIndex + '-' + scenarioIndex + '-' + campaignIndex"
+                type="button"
+                @click="removeObjective(campaignIndex, scenarioIndex, objIndex)"
+              >
+                Remove Objective
+              </button>
+            </div>
+            <button
+              :id="'add-obj-' + scenarioIndex + '-' + campaignIndex"
+              type="button"
+              @click="addObjective(campaignIndex, scenarioIndex)"
+            >
+              Add Objective
             </button>
           </div>
           <button
-            :id="'add-obj-' + scenarioIndex + '-' + campaignIndex"
+            :id="campaignIndex + '-add scenario'"
             type="button"
-            @click="addObjective(campaignIndex, scenarioIndex)"
+            @click="addScenario(campaignIndex)"
           >
-            Add Objective
+            Add Scenario
           </button>
         </div>
-        <button
-          :id="campaignIndex + '-add scenario'"
-          type="button"
-          @click="addScenario(campaignIndex)"
-        >
-          Add Scenario
-        </button>
+        <button id="add campaign" type="button" @click="addCampaign()">Add Campaign</button>
+      </form>
+    </div>
+    <div class="json-section">
+      <div class="json-header">
+        <h2>JSON:</h2>
+        <button @click="copyText">Copy</button>
       </div>
-      <button id="add campaign" type="button" @click="addCampaign()">Add Campaign</button>
-
-      <button id="submit" type="submit">Submit</button>
-    </form>
-    <div v-if="submittedData">
-      <h2>Submitted Data (JSON):</h2>
       <pre id="json-data">{{ jsonOutput }}</pre>
     </div>
   </div>
-  <div v-else-if="currTab === 'Data'"><h1>Time to display the Data</h1></div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import ObjectiveComponent from './components/ObjectiveComponent.vue'
 
-const tabs = ['Form', 'Data']
-const currTab = ref(tabs[0])
 const game = ref({
   name: '',
   campaigns: [
@@ -111,18 +110,7 @@ const game = ref({
   ],
 })
 
-function setTab(ind) {
-  currTab.value = tabs[ind]
-  console.log(`currTab is ${currTab.value}`)
-}
-
-const submittedData = ref(null)
-
-function handleSubmit() {
-  submittedData.value = game.value
-}
-
-const jsonOutput = computed(() => JSON.stringify(submittedData.value, null, 2))
+const jsonOutput = computed(() => JSON.stringify(game.value, null, 2))
 
 function addCampaign() {
   game.value.campaigns.push({
@@ -175,6 +163,10 @@ function updateObjective(campaignIndex, scenarioIndex, objectiveIndex, { key, va
     objective[key] = value
   }
 }
+
+function copyText() {
+  navigator.clipboard.writeText(jsonOutput.value)
+}
 </script>
 
 <style>
@@ -183,5 +175,37 @@ function updateObjective(campaignIndex, scenarioIndex, objectiveIndex, { key, va
   color: #2c3e50;
   margin-top: 60px;
   text-align: left;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.form-section,
+.json-section {
+  padding: 20px;
+  border: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.form-section {
+  flex: 2;
+  background-color: #f9f9f9;
+}
+
+.json-section {
+  flex: 1;
+  background-color: #ffffff;
+  padding-top: 0;
+}
+
+.json-header {
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
 }
 </style>
