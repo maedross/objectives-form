@@ -234,26 +234,26 @@
         />Exclusive</label
       >
     </div>
-    <div :id="'possibility-' + ind" class="inputfield">
-      <label>Possibility:</label>
+    <div :id="'possible-' + ind" class="inputfield">
+      <label>Possible:</label>
       <label
         ><input
           :id="'possible-' + ind"
           type="radio"
-          v-model="possibility"
+          v-model="possible"
           value="Possible"
-          :name="'possibility-' + ind"
-          @change="updateObjective('possibility', 'Possible')"
+          :name="'possible-' + ind"
+          @change="updateObjective('possible', true)"
         />Possible</label
       >
       <label
         ><input
           :id="'impossible-' + ind"
           type="radio"
-          v-model="possibility"
+          v-model="possible"
           value="Impossible"
-          :name="'possibility-' + ind"
-          @change="updateObjective('possibility', 'Impossible')"
+          :name="'possible-' + ind"
+          @change="updateObjective('possible', false)"
         />Impossible</label
       >
     </div>

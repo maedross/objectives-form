@@ -93,7 +93,7 @@ const game = ref({
               effects: [],
               time: '',
               conditions: [],
-              possibility: '',
+              possible: Boolean,
               notes: '',
             },
           ],
@@ -114,63 +114,38 @@ const jsonOutput = computed(() => JSON.stringify(submittedData.value, null, 2))
 function addCampaign() {
   game.value.campaigns.push({
     name: '',
-    scenarios: [
-      {
-        name: '',
-        objectives: [
-          {
-            text: '',
-            identity: '',
-            priority: '',
-            effects: [],
-            time: '',
-            conditions: [],
-            possibility: '',
-            notes: '',
-          },
-        ],
-      },
-    ],
+    scenarios: [],
   })
+  addScenario(-1)
 }
 
 function addScenario(campaignIndex) {
-  game.value.campaigns[campaignIndex].scenarios.push({
+  game.value.campaigns.at(campaignIndex).scenarios.push({
     name: '',
-    objectives: [
-      {
-        text: '',
-        identity: '',
-        priority: '',
-        effects: [],
-        time: '',
-        conditions: [],
-        possibility: '',
-        notes: '',
-      },
-    ],
+    objectives: [],
   })
+  addObjective(campaignIndex, -1)
 }
 
 function addObjective(campaignIndex, scenarioIndex) {
-  game.value.campaigns[campaignIndex].scenarios[scenarioIndex].objectives.push({
+  game.value.campaigns.at(campaignIndex).scenarios.at(scenarioIndex).objectives.push({
     text: '',
     identity: '',
     priority: '',
     effects: [],
     time: '',
     conditions: [],
-    possibility: '',
+    possible: false,
     notes: '',
   })
 }
 
 function removeObjective(campaignIndex, scenarioIndex, objectiveIndex) {
-  game.value.campaigns[campaignIndex].scenarios[scenarioIndex].objectives.splice(objectiveIndex, 1)
+  game.value.campaigns.at(campaignIndex).scenarios.at(scenarioIndex).objectives.splice(objectiveIndex, 1)
 }
 
 function updateObjective(campaignIndex, scenarioIndex, objectiveIndex, { key, value }) {
-  const objective = game.value.campaigns[campaignIndex].scenarios[scenarioIndex].objectives[objectiveIndex]
+  const objective = game.value.campaigns.at(campaignIndex).scenarios.at(scenarioIndex).objectives.at(objectiveIndex)
   if (key === 'effects' || key === 'conditions') {
     if (objective[key].includes(value)) {
       objective[key] = objective[key].filter((attr) => attr !== value)

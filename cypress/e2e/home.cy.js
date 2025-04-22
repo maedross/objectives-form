@@ -73,7 +73,7 @@ describe('Objective Form', () => {
                     effects: ['Victory'],
                     time: 'Statically timed',
                     conditions: ['Prerequisites', 'Exclusive'],
-                    possibility: 'Possible',
+                    possible: true,
                     notes: 'Test notes',
                   },
                 ],
