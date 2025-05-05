@@ -167,51 +167,101 @@
         />Secondary</label
       >
     </div>
-    <div :id="'effects-' + ind" class="inputfield">
-      <label>Effects:</label>
+    <div :id="'successEffects-' + ind" class="inputfield">
+      <label>Success effects:</label>
       <label
         ><input
           :id="ind + '-no effect'"
           type="checkbox"
-          v-model="effects"
+          v-model="successEffects"
           value="None"
-          @change="updateObjective('effects', 'None')"
+          @change="updateObjective('successEffects', 'None')"
         />None</label
       >
       <label
         ><input
           :id="'victory-' + ind"
           type="checkbox"
-          v-model="effects"
+          v-model="successEffects"
           value="Victory"
-          @change="updateObjective('effects', 'Victory')"
+          @change="updateObjective('successEffects', 'Victory')"
         />Victory</label
       >
       <label
         ><input
           :id="'defeat-' + ind"
           type="checkbox"
-          v-model="effects"
+          v-model="successEffects"
           value="Defeat"
-          @change="updateObjective('effects', 'Defeat')"
+          @change="updateObjective('successEffects', 'Defeat')"
         />Defeat</label
       >
       <label
         ><input
           :id="'unlock-' + ind"
           type="checkbox"
-          v-model="effects"
+          v-model="successEffects"
           value="Unlock objective"
-          @change="updateObjective('effects', 'Unlock objective')"
+          @change="updateObjective('successEffects', 'Unlock objective')"
         />Unlock objective</label
       >
       <label
         ><input
           :id="'lock-' + ind"
           type="checkbox"
-          v-model="effects"
+          v-model="successEffects"
           value="Lock objective"
-          @change="updateObjective('effects', 'Lock objective')"
+          @change="updateObjective('successEffects', 'Lock objective')"
+        />Lock objective</label
+      >
+    </div>
+
+    <!-- Failure effects -->
+    <div :id="'effects-' + ind" class="inputfield">
+      <label>Failure effects:</label>
+      <label
+        ><input
+          :id="ind + '-no effect'"
+          type="checkbox"
+          v-model="failureEffects"
+          value="None"
+          @change="updateObjective('failureEffects', 'None')"
+        />None</label
+      >
+      <label
+        ><input
+          :id="'victory-' + ind"
+          type="checkbox"
+          v-model="failureEffects"
+          value="Victory"
+          @change="updateObjective('failureEffects', 'Victory')"
+        />Victory</label
+      >
+      <label
+        ><input
+          :id="'defeat-' + ind"
+          type="checkbox"
+          v-model="failureEffects"
+          value="Defeat"
+          @change="updateObjective('failureEffects', 'Defeat')"
+        />Defeat</label
+      >
+      <label
+        ><input
+          :id="'unlock-' + ind"
+          type="checkbox"
+          v-model="failureEffects"
+          value="Unlock objective"
+          @change="updateObjective('failureEffects', 'Unlock objective')"
+        />Unlock objective</label
+      >
+      <label
+        ><input
+          :id="'lock-' + ind"
+          type="checkbox"
+          v-model="failureEffects"
+          value="Lock objective"
+          @change="updateObjective('failureEffects', 'Lock objective')"
         />Lock objective</label
       >
     </div>

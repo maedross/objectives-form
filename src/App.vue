@@ -140,7 +140,8 @@ const game = ref({
               text: '',
               identity: '',
               priority: '',
-              effects: [],
+              successEffects: [],
+              failureEffects: [],
               time: '',
               conditions: [],
               possible: false,
@@ -178,7 +179,8 @@ function addObjective(campaignIndex, scenarioIndex) {
     text: '',
     identity: '',
     priority: '',
-    effects: [],
+    successEffects: [],
+    failureEffects: [],
     time: '',
     conditions: [],
     possible: false,
@@ -198,7 +200,7 @@ function updateObjective(campaignIndex, scenarioIndex, objectiveIndex, { key, va
     .at(campaignIndex)
     .scenarios.at(scenarioIndex)
     .objectives.at(objectiveIndex)
-  if (key === 'effects' || key === 'conditions') {
+  if (key === 'successEffects' || key === 'failureEffects' || key === 'conditions') {
     if (objective[key].includes(value)) {
       objective[key] = objective[key].filter((attr) => attr !== value)
     } else {
