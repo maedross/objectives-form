@@ -1,5 +1,5 @@
 <template>
-  <h5>Objective {{ ind.split('-')[0] }}</h5>
+
   <label :for="'text-' + ind"
     >Objective text:<input
     :id="'text-' + ind"
@@ -98,6 +98,50 @@
           :name="'identity-' + ind"
           @change="updateObjective('identity', 'Survive')"
         />Survive</label
+      >
+
+      <label
+        ><input
+          :id="'acc-res-' + ind"
+          type="radio"
+          v-model="identity"
+          value="Accumulate resource"
+          :name="'acc-res-' + ind"
+          @change="updateObjective('identity', 'Accumulate resource')"
+        />Accumulate resource</label
+      >
+
+      <label
+        ><input
+          :id="'task-gather-' + ind"
+          type="radio"
+          v-model="identity"
+          value="Task to gather resource"
+          :name="'task-gather-' + ind"
+          @change="updateObjective('identity', 'Task to gather resource')"
+        />Task to gather resource</label
+      >
+
+      <label
+        ><input
+          :id="'protect-unit-' + ind"
+          type="radio"
+          v-model="identity"
+          value="Protect unit"
+          :name="'protect-unit-' + ind"
+          @change="updateObjective('identity', 'Protect unit')"
+        />Protect unit</label
+      >
+
+      <label
+        ><input
+          :id="'protect-building-' + ind"
+          type="radio"
+          v-model="identity"
+          value="Protect building"
+          :name="'protect-building-' + ind"
+          @change="updateObjective('identity', 'Protect building')"
+        />Protect building</label
       >
     </div>
     <div :id="'priority-' + ind" class="inputfield">

@@ -1,15 +1,10 @@
 # Tasks
-* Add notes to scenarios
-* Add notes to campaigns
 
 # Problems 
 # Testing
 
 # Ideas
-* Move remove objective button to a nicer place
-* Add accumulate resource and task to gather resource to identity
 * Change identities to allow for multiple
-* Add protect unit/building to identity
 * Distinguish between success effects vs failure effects
 
 # Solved Problems

@@ -7,7 +7,20 @@
           <label for="game-name">Game Name:</label>
           <input type="text" v-model="game.name" :id="'game-name'" />
         </div>
+        <div>
+            <label :for="'game-notes'"
+              >Game notes:<textarea
+                type="text"
+                size="100"
+                v-model="game.notes"
+                :id="'game-notes-'"
+                rows="3"
+                cols="50"
+              ></textarea>
+            </label>
+          </div>
 
+        <!-- Campaigns -->
         <div
           :id="'campaign' + (campaignIndex + 1)"
           v-for="(campaign, campaignIndex) in game.campaigns"
@@ -18,7 +31,20 @@
             <label for="campaign-name">Campaign Name:</label>
             <input type="text" v-model="campaign.name" :id="'campaign-name-' + campaignIndex" />
           </div>
+          <div>
+            <label :for="'campaign-notes-' + campaignIndex"
+              >Campaign notes:<textarea
+                type="text"
+                size="100"
+                v-model="campaign.notes"
+                :id="'campaign-notes-' + campaignIndex"
+                rows="3"
+                cols="50"
+              ></textarea>
+            </label>
+          </div>
 
+          <!-- Campaigns -->
           <div
             :id="'scenario' + (scenarioIndex + 1)"
             v-for="(scenario, scenarioIndex) in campaign.scenarios"
@@ -33,23 +59,37 @@
                 :id="'scenario-name-' + scenarioIndex + '-' + campaignIndex"
               />
             </div>
-
+            <div>
+              <label :for="'scenario-notes-' + scenarioIndex + '-' + campaignIndex"
+                >Scenario notes:<textarea
+                  type="text"
+                  size="100"
+                  v-model="scenario.notes"
+                  :id="'scenario-notes-' + scenarioIndex + '-' + campaignIndex"
+                  rows="3"
+                  cols="50"
+                ></textarea>
+              </label>
+            </div>
             <div
               :id="'objective' + '-' + objIndex + '-' + scenarioIndex + '-' + campaignIndex"
               v-for="(_, objIndex) in scenario.objectives"
               :key="objIndex"
             >
+              <div class="obj-container">
+                <h5>Objective {{ objIndex }}</h5>
+                <button
+                  :id="'remove-obj-' + objIndex + '-' + scenarioIndex + '-' + campaignIndex"
+                  type="button"
+                  @click="removeObjective(campaignIndex, scenarioIndex, objIndex)"
+                >
+                  Remove Objective
+                </button>
+              </div>
               <ObjectiveComponent
                 :ind="objIndex + '-' + scenarioIndex + '-' + campaignIndex"
                 @update-objective="updateObjective(campaignIndex, scenarioIndex, objIndex, $event)"
               />
-              <button
-                :id="'remove-obj-' + objIndex + '-' + scenarioIndex + '-' + campaignIndex"
-                type="button"
-                @click="removeObjective(campaignIndex, scenarioIndex, objIndex)"
-              >
-                Remove Objective
-              </button>
             </div>
             <button
               :id="'add-obj-' + scenarioIndex + '-' + campaignIndex"
@@ -86,12 +126,15 @@ import ObjectiveComponent from './components/ObjectiveComponent.vue'
 
 const game = ref({
   name: '',
+  notes: '',
   campaigns: [
     {
       name: '',
+      notes: '',
       scenarios: [
         {
           name: '',
+          notes: '',
           objectives: [
             {
               text: '',
@@ -115,6 +158,7 @@ const jsonOutput = computed(() => JSON.stringify(game.value, null, 2))
 function addCampaign() {
   game.value.campaigns.push({
     name: '',
+    notes: '',
     scenarios: [],
   })
   addScenario(-1)
@@ -123,6 +167,7 @@ function addCampaign() {
 function addScenario(campaignIndex) {
   game.value.campaigns.at(campaignIndex).scenarios.push({
     name: '',
+    notes: '',
     objectives: [],
   })
   addObjective(campaignIndex, -1)
@@ -175,6 +220,13 @@ function copyText() {
   color: #2c3e50;
   margin-top: 60px;
   text-align: left;
+}
+
+.obj-container {
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  align-items: center;
 }
 
 .container {
